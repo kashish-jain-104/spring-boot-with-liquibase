@@ -1,0 +1,76 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001_create_table#1
+      author: kashish.jain@valtech.com
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - sequenceExists:
+                sequenceName: user_id_seq
+      changes:
+        - createSequence:
+            sequenceName: user_id_seq
+            startValue: 1
+            incrementBy: 1
+
+  - changeSet:
+      id: 001_create_table#2
+      author: kashish.jain@valtech.com
+      preConditions:
+        - onFail: MARK_RAN
+        - and:
+            - sequenceExists:
+                sequenceName: user_id_seq
+            - not:
+                - tableExists:
+                    tableName: users
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  defaultValueSequenceNext: user_id_seq
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: email
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+
+  - changeSet:
+      id: 001_create_table#3
+      author: kashish.jain@valtech.com
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: country
+      changes:
+        - createTable:
+            tableName: country
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
