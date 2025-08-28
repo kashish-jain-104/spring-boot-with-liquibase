@@ -9,6 +9,7 @@ services:
   app:
     depends_on:
       - db
+    build: .
     image: springboot-with-liquibase:1.0.0
     restart: always
     environment:

@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: changelog-001-create-tables.yaml
+  - include:
+      file: changelog-002-insert-data.yaml
+  - include:
+      file: changelog-003-bulk-data.yaml
+  - include:
+      file: changelog-004-update-data.yaml

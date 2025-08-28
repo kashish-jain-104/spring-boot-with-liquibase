@@ -20,7 +20,7 @@ databaseChangeLog:
       id: 002_insert_data#2
       author: kashish.jain@valtech.com
       preConditions:
-        - onFail: MARK_RAN # possible values: WARN, HALT, CONTINUE, or MARK_RAN
+        - onFail: MARK_RAN
         - sqlCheck:
             expectedResult: 0
             sql: SELECT COUNT(*) FROM users WHERE username = 'johndoe' and email ='johndoe@example.com'

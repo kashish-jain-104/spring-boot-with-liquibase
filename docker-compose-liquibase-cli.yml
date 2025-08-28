@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  postgres:
+    image: postgres:13.22-alpine3.22
+    container_name: some-postgres-1
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: liquibase_cli
+    ports:
+      - "5432:5432"
+    networks:
+      - liquibase-net
+
+  liquibase:
+    image: liquibase/liquibase
+    working_dir: /liquibase/changelog
+    container_name: liquibase-cli
+    depends_on:
+      - postgres
+    volumes:
+      - ./src/main/resources/liquibase-cli-example/changelogs:/liquibase/changelog
+    stdin_open: true
+    tty: true
+    networks:
+      - liquibase-net
+    entrypoint: /bin/bash  # optional: starts an interactive shell for you to run liquibase commands
+
+networks:
+  liquibase-net:

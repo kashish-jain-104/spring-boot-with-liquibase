@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004_update_data#1
+      author: kashish.jain@valtech.com
+      changes:
+        - update:
+            tableName: users
+            columns:
+              - column:
+                  name: name
+                  value: John Doe
+            where: username = 'johndoe' AND email = 'johndoe@example.com'
+      rollback:
+        - update:
+            tableName: users
+            columns:
+              - column:
+                  name: name
+                  value: John
+            where: username = 'johndoe' AND email = 'johndoe@example.com'

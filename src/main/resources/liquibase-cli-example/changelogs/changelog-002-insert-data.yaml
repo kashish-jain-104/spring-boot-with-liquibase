@@ -1,0 +1,78 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002_insert_data#1
+      author: kashish.jain@valtech.com
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM users WHERE username = 'johndoe' and email ='johndoe@example.com'
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: johndoe
+              - column:
+                  name: name
+                  value: John
+              - column:
+                  name: email
+                  value: johndoe@example.com
+              - column:
+                  name: created_at
+                  valueComputed: CURRENT_TIMESTAMP
+                  #valueDate: 2025-09-03T10:00:00
+  - changeSet:
+      id: 002_insert_data#2
+      author: kashish.jain@valtech.com
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM users WHERE username = 'johndoe' and email ='johndoe@example.com'
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: johndoe
+              - column:
+                  name: name
+                  value: John
+              - column:
+                  name: email
+                  value: johndoe@example.com
+              - column:
+                  name: created_at
+                  valueComputed: CURRENT_TIMESTAMP
+  - changeSet:
+      id: 002_insert_data#3
+      author: kashish.jain@valtech.com
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM users WHERE username = 'test' and email ='test@example.com'
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: test
+              - column:
+                  name: name
+                  value: Test
+              - column:
+                  name: email
+                  value: test@example.com
+              - column:
+                  name: created_at
+                  valueComputed: CURRENT_TIMESTAMP
+      rollback:
+        - delete:
+            tableName: users
+            where: username = 'test' AND email = 'test@example.com'

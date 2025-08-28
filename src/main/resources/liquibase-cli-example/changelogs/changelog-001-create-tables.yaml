@@ -12,6 +12,9 @@ databaseChangeLog:
             sequenceName: user_id_seq
             startValue: 1
             incrementBy: 1
+      rollback:
+        - dropSequence:
+            sequenceName: user_id_seq
 
   - changeSet:
       id: 001_create_table#2
@@ -42,6 +45,11 @@ databaseChangeLog:
                     nullable: false
                     unique: true
               - column:
+                  name: name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
                   name: email
                   type: VARCHAR(100)
                   constraints:
@@ -62,6 +70,34 @@ databaseChangeLog:
       changes:
         - createTable:
             tableName: country
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropTable:
+            tableName: users
+            cascadeConstraints: true
+
+  - changeSet:
+      id: 001_create_table#4
+      author: kashish.jain@valtech.com
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: city
+      changes:
+        - createTable:
+            tableName: city
             columns:
               - column:
                   name: id
